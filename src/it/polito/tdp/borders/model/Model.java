@@ -2,6 +2,7 @@ package it.polito.tdp.borders.model;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +19,8 @@ public class Model {
 	private Graph<Country, DefaultEdge> graph ;
 	private List<Country> countries ;
 	private Map<Integer,Country> countriesMap ;
+	
+	private Simulator sim ;
 	
 	public Model() {
 			}
@@ -62,5 +65,46 @@ public class Model {
 		Collections.sort(list);
 		return list ;
 	}
+
+	public List<Country> getCountries() {
+		return countries;
+	}
+
+	public void simula(Country partenza) {
+		
+		this.sim = new Simulator() ;
+		
+		this.sim.init(this.graph, partenza);
+		this.sim.run();
+		
+	}
+
+	public int getTsimulazione() {
+		return this.sim.getT();
+	}
+
+	public List<CountryAndNumber> getCountriesStanziali() {
+		Map<Country, Integer> mappa = this.sim.getStanziali() ;
+		List<CountryAndNumber> result = new ArrayList<>() ;
+		
+		// Converti la mappa <Country,Integer> in una lista di CountryAndNumber
+		for(Country c: mappa.keySet()) {
+			result.add(new CountryAndNumber(c, mappa.get(c))) ;
+		}
+		
+		// Ordina la lista per valori DECRESCENTI di number
+		Collections.sort(result, new Comparator<CountryAndNumber>() {
+
+			@Override
+			public int compare(CountryAndNumber o1, CountryAndNumber o2) {
+				return o2.getNumber()-o1.getNumber();
+			}
+			
+		});
+		
+		return result;
+	}
+	
+	
 
 }

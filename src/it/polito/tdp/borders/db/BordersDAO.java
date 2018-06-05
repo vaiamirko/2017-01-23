@@ -57,7 +57,8 @@ public class BordersDAO {
 				"where CCode in ( " + 
 				"select state1no " + 
 				"from contiguity " + 
-				"where year<=? and conttype=1)" ;
+				"where year<=? and conttype=1) " +
+				"order by StateNme ASC " ;
 		
 		try {
 			Connection conn = DBConnect.getConnection() ;
