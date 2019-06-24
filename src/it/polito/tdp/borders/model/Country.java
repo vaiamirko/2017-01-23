@@ -13,11 +13,12 @@ package it.polito.tdp.borders.model;
  * @author Fulvio
  *
  */
-public class Country {
+public class Country implements Comparable<Country>{
 
 	private int cCode ; // Country Code for the state
 	private String stateAbb ; // State Abbreviation (3 capital letters)
 	private String stateName ; // Full State name
+	private int numvicni;
 	
 	/**
 	 * Initialize a new {@link Country} object, with full parameters.
@@ -108,7 +109,21 @@ public class Country {
 	 */
 	@Override
 	public String toString() {
-		return String.format("[%s=%s]", stateAbb, stateName);
+		return String.format("\n %s numero vicini : %d ", stateName,this.numvicni);
+	}
+
+	@Override
+	public int compareTo(Country o) {
+		// TODO Auto-generated method stub
+		return -(this.numvicni-o.getNumvicni());
+	}
+
+	public int getNumvicni() {
+		return numvicni;
+	}
+
+	public void setNumvicni(int numvicni) {
+		this.numvicni = numvicni;
 	}
 	
 	
